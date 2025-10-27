@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple CRUD</title>
+</head>
+<body>
+  <h2>To-Do List (CRUD)</h2>
+  <input type="text" id="task" placeholder="Enter task">
+  <button onclick="addTask()">Add</button>
+  <ul id="list"></ul>
+
+  <script>
+    function loadTasks() {
+      let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      let list = document.getElementById('list');
+      list.innerHTML = '';
+      tasks.forEach((t, i) => {
+        list.innerHTML += `<li>${t} <button onclick="deleteTask(${i})">Delete</button></li>`;
+      });
+    }
+
+    function addTask() {
+      let task = document.getElementById('task').value;
+      if (task) {
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        tasks.push(task);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        loadTasks();
+      }
+    }
+
+    function deleteTask(i) {
+      let tasks = JSON.parse(localStorage.getItem('tasks'));
+      tasks.splice(i, 1);
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+      loadTasks();
+    }
+
+    window.onload = loadTasks;
+  </script>
+</body>
+</html>
