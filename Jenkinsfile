@@ -1,22 +1,28 @@
 pipeline {
     agent any
+
     stages {
-        stage('Checkout') {
+        stage('Clone Repository') {
             steps {
-                git 'https://github.com/renga511/jencrud.git'
+                git url: 'https://github.com/renga511/jenform.git', branch: 'main'
             }
         }
-        stage('Build HTML') {
+
+        stage('Build') {
             steps {
-                bat 'dir'
+                echo 'Building the project...'
             }
         }
-        stage('Display Link') {
+
+        stage('Test') {
             steps {
-                script {
-                    echo "✅ CRUD App Ready!"
-                    echo "<a href='file:///C:/ProgramData/Jenkins/.jenkins/workspace/${env.JOB_NAME}/crud.html' target='_blank'>Open CRUD App</a>"
-                }
+                echo 'Running tests...'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application...'
             }
         }
     }
